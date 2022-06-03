@@ -289,7 +289,7 @@ const initAutoTPCheckbox = (stopLossInput, _SETTINGS) => {
 
 	// add checkbox under stop loss input
 	const containerDiv = stopLossInput.parentNode.parentNode.parentNode;
-	containerDiv.innerHTML += getAutoTPCheckbox(_SETTINGS);
+	containerDiv.insertAdjacentHTML('beforeend', getAutoTPCheckbox(_SETTINGS));
 
 	// sync with chrome when checkbox is toggled
 	const autoTPCheckbox = document.querySelector('#auto-tp-checkbox');
