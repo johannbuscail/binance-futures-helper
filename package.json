@@ -1,7 +1,24 @@
 {
+  "name": "binance-position-calculator",
+  "description": "Position size calculator for trading futures on Binance.",
+  "version": "1.0.0",
+  "main": "src/main.js",
   "devDependencies": {
     "eslint": "^7.32.0 || ^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.2"
-  }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johannb75/binance-position-calculator.git"
+  },
+  "author": "Johann Buscail",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johannb75/binance-position-calculator/issues"
+  },
+  "homepage": "https://github.com/johannb75/binance-position-calculator#readme"
 }
