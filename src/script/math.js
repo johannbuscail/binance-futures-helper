@@ -1,69 +1,68 @@
 // the logic behind the plugin
 export const calculatePosSize = (
-  maxRiskConst,
-  takerFeeConst,
-  makerFeeConst,
-  balance,
-  entry,
-  stopLoss,
-  target,
-  entryOrderType,
-  tpOrderType,
-  slOrderType
+	maxRiskConst,
+	takerFeeConst,
+	makerFeeConst,
+	balance,
+	entry,
+	stopLoss,
+	target,
+	entryOrderType,
+	tpOrderType,
+	slOrderType,
 ) => {
-  // basic stuff
-  let isLong = entry > stopLoss;
-  let maxToRiskAmount = balance * maxRiskConst * -1;
+	function calcFee(type) {
+		return type === 'market' ? makerFeeConst : takerFeeConst;
+	}
 
-  // risk : reward
-  let rewardPerUnit = isLong ? target - entry : entry - target;
-  let riskPerUnit = isLong ? stopLoss - entry : entry - stopLoss;
-  let riskReward = rewardPerUnit / -riskPerUnit;
+	// basic stuff
+	const isLong = entry > stopLoss;
+	const maxToRiskAmount = balance * maxRiskConst * -1;
 
-  // max position - calculating stop loss fee in
-  let totalCostPerUnit = isLong ? stopLoss - entry : entry - stopLoss;
-  let maxPosSize = maxToRiskAmount / totalCostPerUnit;
-  let maxPosSizeUSD = (maxToRiskAmount / totalCostPerUnit) * entry;
+	// risk : reward
+	const rewardPerUnit = isLong ? target - entry : entry - target;
+	const riskPerUnit = isLong ? stopLoss - entry : entry - stopLoss;
+	const riskReward = rewardPerUnit / -riskPerUnit;
 
-  // fees
-  let entryFee = entry * calcFee(entryOrderType) * maxPosSize * -1;
-  let stopLossFee = stopLoss * calcFee(slOrderType) * maxPosSize * -1;
-  let takeProfitFee = target * calcFee(tpOrderType) * maxPosSize * -1;
+	// max position - calculating stop loss fee in
+	const totalCostPerUnit = isLong ? stopLoss - entry : entry - stopLoss;
+	const maxPosSize = maxToRiskAmount / totalCostPerUnit;
+	const maxPosSizeUSD = (maxToRiskAmount / totalCostPerUnit) * entry;
 
-  // totals after deducting fees
-  let totalReward = isLong
-    ? maxPosSize * target - maxPosSize * entry
-    : maxPosSize * entry - maxPosSize * target;
+	// fees
+	const entryFee = entry * calcFee(entryOrderType) * maxPosSize * -1;
+	const stopLossFee = stopLoss * calcFee(slOrderType) * maxPosSize * -1;
+	const takeProfitFee = target * calcFee(tpOrderType) * maxPosSize * -1;
 
-  return {
-    maxRiskConst,
-    takerFeeConst,
-    makerFeeConst,
-    balance,
-    entry,
-    stopLoss,
-    target,
-    isLong,
-    maxToRiskAmount,
-    rewardPerUnit,
-    riskPerUnit,
-    riskReward,
-    totalCostPerUnit,
-    maxPosSize,
-    maxPosSizeUSD,
-    entryFee,
-    stopLossFee,
-    takeProfitFee,
-    totalReward,
-  };
+	// totals after deducting fees
+	const totalReward = isLong
+		? maxPosSize * target - maxPosSize * entry
+		: maxPosSize * entry - maxPosSize * target;
 
-  function calcFee(type) {
-    return type === "market" ? makerFeeConst : takerFeeConst;
-  }
+	return {
+		maxRiskConst,
+		takerFeeConst,
+		makerFeeConst,
+		balance,
+		entry,
+		stopLoss,
+		target,
+		isLong,
+		maxToRiskAmount,
+		rewardPerUnit,
+		riskPerUnit,
+		riskReward,
+		totalCostPerUnit,
+		maxPosSize,
+		maxPosSizeUSD,
+		entryFee,
+		stopLossFee,
+		takeProfitFee,
+		totalReward,
+	};
 };
-
 
 export const calculateTargetPrice = (rrRatio, stopLoss, entry) => {
 	const targetPrice = entry + (entry - stopLoss) * rrRatio;
 	return targetPrice;
-}
+};

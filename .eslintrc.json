@@ -1,0 +1,79 @@
+{
+	"env": {
+		"browser": true,
+		"es2021": true,
+		"webextensions": true
+	},
+	"extends": [
+		"airbnb-base"
+	],
+	"parserOptions": {
+		"ecmaVersion": "latest",
+		"sourceType": "module"
+	},
+	"rules": {
+		"linebreak-style": 0,
+		"import/no-extraneous-dependencies": [
+			"error",
+			{
+				"devDependencies": [
+					"**/*.test.ts",
+					"**/*.test.js",
+					"**/*.jest.ts",
+					"**/*.jest.js",
+					"./src/@types/jest_declarations.d.ts"
+				]
+			}
+		],
+		"lines-between-class-members": [
+			"error",
+			"always",
+			{
+				"exceptAfterSingleLine": true
+			}
+		],
+		"max-classes-per-file": 0,
+		"indent": [
+			2,
+			"tab",
+			{
+				"SwitchCase": 1,
+				"VariableDeclarator": 1
+			}
+		],
+		"curly": [
+			"error",
+			"multi"
+		],
+		"nonblock-statement-body-position": [
+			"error",
+			"below"
+		],
+		"no-plusplus": [
+			"error",
+			{
+				"allowForLoopAfterthoughts": true
+			}
+		],
+		"no-void": [
+			"error",
+			{
+				"allowAsStatement": true
+			}
+		],
+		"no-continue": 0,
+		"no-param-reassign": 0,
+		"no-restricted-syntax": 0,
+		"no-tabs": 0,
+		"no-shadow": 0,
+		"no-underscore-dangle": 1,
+		"consistent-return": 1,
+		"class-methods-use-this": 0,
+		"implicit-arrow-linebreak": [
+			"error",
+			"below"
+		],
+		"import/prefer-default-export": 0,
+		"import/extensions": 0
+	}
+}
