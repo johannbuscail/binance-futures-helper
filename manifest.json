@@ -1,9 +1,9 @@
 {
-  "name": "Binance Futures Position Calculator",
-  "version": "0.2.0",
+  "name": "Binance Futures Helper",
+  "version": "1.0.0",
   "manifest_version": 3,
-  "description": "binance-position-calculator",
-  "homepage_url": "https://github.com/jericho1338/binance-position-calculator",
+  "description": "binance-futures-helper",
+  "homepage_url": "https://github.com/johannb75/binance-futures-helper",
   "icons": {
     "16": "icons/binance_16.png",
     "48": "icons/binance_48.png",

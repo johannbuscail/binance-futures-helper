@@ -1,5 +1,5 @@
 // html stuff -> ALL CRAP CODE
-const PREFIX = 'binance-position-calculator';
+const PREFIX = 'binance-futures-helper';
 const LOG_WINDOW_ID = `${PREFIX}-container`;
 const LOG_WINDOW_BTN_ID = `${PREFIX}-details-btn`;
 const LOG_WINDOW_DETAILED_ID = `${PREFIX}-content-detailed`;
