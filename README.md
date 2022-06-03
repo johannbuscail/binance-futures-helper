@@ -83,6 +83,9 @@ Have in mind that the position calculator **only works when the TP/SL checkbox i
 
 - the yellow log window with calculation details can be be hidden, but the position size will still be set automatically
 
+# Thanks
+Thanks to [jericho1338](https://github.com/jericho1338) for the idea and the [initial implementation](https://github.com/jericho1338/binance-position-calculator)!
+
 # Disclaimer
 
 Last updated: March 15, 2022
