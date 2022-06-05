@@ -10,6 +10,7 @@ export const calculatePosSize = (
 	entryOrderType,
 	tpOrderType,
 	slOrderType,
+	leverage,
 ) => {
 	function calcFee(type) {
 		return type === 'market' ? makerFeeConst : takerFeeConst;
@@ -26,8 +27,8 @@ export const calculatePosSize = (
 
 	// max position - calculating stop loss fee in
 	const totalCostPerUnit = isLong ? stopLoss - entry : entry - stopLoss;
-	const maxPosSize = maxToRiskAmount / totalCostPerUnit;
-	const maxPosSizeUSD = (maxToRiskAmount / totalCostPerUnit) * entry;
+	const maxPosSize = (maxToRiskAmount / totalCostPerUnit) / leverage;
+	const maxPosSizeUSD = ((maxToRiskAmount / totalCostPerUnit) * entry) / leverage;
 
 	// fees
 	const entryFee = entry * calcFee(entryOrderType) * maxPosSize * -1;

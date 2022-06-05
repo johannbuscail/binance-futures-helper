@@ -14,6 +14,7 @@
 	const LAST_PRICE_QUERY = '.ticker-wrap .draggableHandle';
 	const TAB_MARKET_QUERY = '#tab-MARKET > .active';
 	const TAB_LIMIT_QUERY = '#tab-LIMIT > .active';
+	const LEVERAGE_QUERY = '.margin-leverage-or-title-row a:last-child';
 
 	let SETTINGS = {};
 	let priceObserver;
@@ -33,6 +34,7 @@
 
 		const stopLoss = parseFloat(document.querySelector(STOP_LOSS_QUERY).value);
 		const target = parseFloat(document.querySelector(TAKE_PROFIT_QUERY).value);
+		const leverage = parseFloat(document.querySelector(LEVERAGE_QUERY).innerText.slice(0, -1));
 		const posSizeInput = document.querySelector(POSITION_SIZE_QUERY);
 		const balance = html.getBalanceFromHtml() * (100 / portfolioPercentage);
 
@@ -57,10 +59,11 @@
 			entryOrderType,
 			tpOrderType,
 			slOrderType,
+			leverage,
 		);
 
 		const posSize = helpers.isStableCoin(unitOfMeasure)
-			? entry * data.maxPosSize
+			? data.maxPosSizeUSD
 			: data.maxPosSize;
 
 		if (isSetPosSize && helpers.isNumber(data.maxPosSize))
