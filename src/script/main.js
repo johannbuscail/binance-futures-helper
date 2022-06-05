@@ -34,7 +34,9 @@
 
 		const stopLoss = parseFloat(document.querySelector(STOP_LOSS_QUERY).value);
 		const target = parseFloat(document.querySelector(TAKE_PROFIT_QUERY).value);
-		const leverage = parseFloat(document.querySelector(LEVERAGE_QUERY).innerText.slice(0, -1));
+		const leverage = SETTINGS.IS_SET_USE_LEVERAGE
+			? parseFloat(document.querySelector(LEVERAGE_QUERY).innerText.slice(0, -1))
+			: 1;
 		const posSizeInput = document.querySelector(POSITION_SIZE_QUERY);
 		const balance = html.getBalanceFromHtml() * (100 / portfolioPercentage);
 
