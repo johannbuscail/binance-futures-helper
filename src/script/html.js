@@ -350,17 +350,14 @@ const initCheckbox = (
 	useLeverageCheckbox.addEventListener('change', onChange);
 };
 
-const initUseLeverageCheckbox = (stopLossInput, _SETTINGS) => {
-	const useLeverageContainerID = 'use-leverage-container';
-	const useLeverageCheckboxID = 'use-leverage-checkbox';
-
+const initUseLeverageCheckbox = (stopLossInput, _SETTINGS) =>
 	initCheckbox(
 		stopLossInput,
 		_SETTINGS,
 		'IS_SET_USE_LEVERAGE',
 		'Use leverage for the equation',
-		useLeverageContainerID,
-		useLeverageCheckboxID,
+		USE_LEVERAGE_CONTAINER_ID,
+		USE_LEVERAGE_CHECKBOX_ID,
 		(ev) => {
 			chrome.storage.sync.set({
 				..._SETTINGS,
@@ -368,19 +365,15 @@ const initUseLeverageCheckbox = (stopLossInput, _SETTINGS) => {
 			});
 		},
 	);
-};
 
-const initAutoTPCheckbox = (stopLossInput, _SETTINGS) => {
-	const autoTPContainerID = 'auto-tp-container';
-	const autoTPCheckboxID = 'auto-tp-checkbox';
-
+const initAutoTPCheckbox = (stopLossInput, _SETTINGS) =>
 	initCheckbox(
 		stopLossInput,
 		_SETTINGS,
 		'IS_SET_AUTO_TP',
 		'Auto Take Profit (based on RR)',
-		autoTPContainerID,
-		autoTPCheckboxID,
+		AUTO_TP_CONTAINER_ID,
+		AUTO_TP_CHECKBOX_ID,
 		(ev) => {
 			const settings = {
 				..._SETTINGS,
@@ -390,7 +383,6 @@ const initAutoTPCheckbox = (stopLossInput, _SETTINGS) => {
 			chrome.storage.sync.set(settings);
 		},
 	);
-};
 
 const getLogWindowTemplate = (title = '') =>
 	`
