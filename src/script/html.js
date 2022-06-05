@@ -5,12 +5,18 @@ const LOG_WINDOW_BTN_ID = `${PREFIX}-details-btn`;
 const LOG_WINDOW_DETAILED_ID = `${PREFIX}-content-detailed`;
 const LOG_WINDOW_MINI_ID = `${PREFIX}-content-mini`;
 
+const CHECKBOX_LABEL_CLASS = `${PREFIX}-cb-label`;
+const CHECKBOX_CONTAINER_CLASS = `${PREFIX}-cb-container`;
+const CHECKBOX_CHECKED_ICON_CLASS = `${PREFIX}-cb-checked-icon`;
+const CHECKBOX_TEXT_CONTAINER_CLASS = `${PREFIX}-cb-text-container`;
+const CHECKBOX_TEXT_CLASS = `${PREFIX}-cb-text`;
+
 const BALANCE_QUERY = 'div[name=orderForm] span';
 
 const DOWN_ICON = '<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 490.688 490.688" style="enable-background:new 0 0 490.688 490.688;" xml:space="preserve"> <g> <path style="fill:#607D8B;" d="M472.328,216.529L245.213,443.665L18.098,216.529c-4.237-4.093-10.99-3.975-15.083,0.262 c-3.992,4.134-3.992,10.687,0,14.82l234.667,234.667c4.165,4.164,10.917,4.164,15.083,0l234.667-234.667 c4.093-4.237,3.975-10.99-0.262-15.083c-4.134-3.993-10.687-3.993-14.821,0L472.328,216.529z"/>   <path style="fill:#607D8B;" d="M472.328,24.529L245.213,251.665L18.098,24.529c-4.237-4.093-10.99-3.975-15.083,0.262 c-3.992,4.134-3.992,10.687,0,14.821l234.667,234.667c4.165,4.164,10.917,4.164,15.083,0L487.432,39.612 c4.237-4.093,4.354-10.845,0.262-15.083c-4.093-4.237-10.845-4.354-15.083-0.262c-0.089,0.086-0.176,0.173-0.262,0.262 L472.328,24.529z"/> </g> <path d="M245.213,469.415c-2.831,0.005-5.548-1.115-7.552-3.115L2.994,231.633c-4.093-4.237-3.975-10.99,0.262-15.083 c4.134-3.992,10.687-3.992,14.82,0l227.136,227.115l227.115-227.136c4.237-4.093,10.99-3.975,15.083,0.262 c3.993,4.134,3.993,10.687,0,14.821L252.744,466.279C250.748,468.28,248.04,469.408,245.213,469.415z"/> <path d="M245.213,277.415c-2.831,0.005-5.548-1.115-7.552-3.115L2.994,39.633c-4.093-4.237-3.975-10.99,0.262-15.083 c4.134-3.992,10.687-3.992,14.821,0l227.136,227.115L472.328,24.529c4.093-4.237,10.845-4.354,15.083-0.262   s4.354,10.845,0.262,15.083c-0.086,0.089-0.173,0.176-0.262,0.262L252.744,274.279C250.748,276.28,248.04,277.408,245.213,277.415z"/></svg>';
 const UP_ICON = '<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 490.544 490.544" style="enable-background:new 0 0 490.544 490.544;" xml:space="preserve"><g> <path style="fill:#607D8B;" d="M18.098,274.151L245.213,47.015l227.115,227.136c4.237,4.093,10.99,3.975,15.083-0.262 c3.993-4.134,3.993-10.687,0-14.821L252.744,24.401c-4.165-4.164-10.917-4.164-15.083,0L2.994,259.068 c-4.093,4.237-3.975,10.99,0.262,15.083c4.134,3.992,10.687,3.992,14.82,0H18.098z"/> <path style="fill:#607D8B;" d="M252.765,216.38c-4.165-4.164-10.917-4.164-15.083,0L3.016,451.047 c-4.093,4.237-3.976,10.99,0.262,15.083c4.134,3.993,10.687,3.993,14.821,0l227.115-227.115l227.115,227.136 c4.237,4.093,10.99,3.976,15.083-0.261c3.993-4.134,3.993-10.688,0-14.821L252.765,216.38z"/></g><path d="M479.88,277.266c-2.831,0.005-5.548-1.115-7.552-3.115L245.213,47.015L18.098,274.151 c-4.237,4.093-10.99,3.975-15.083-0.262c-3.992-4.134-3.992-10.687,0-14.82L237.682,24.401c4.165-4.164,10.917-4.164,15.083,0 l234.667,234.667c4.159,4.172,4.148,10.926-0.024,15.085C485.409,276.146,482.702,277.265,479.88,277.266z"/><path d="M479.88,469.266c-2.831,0.005-5.548-1.115-7.552-3.115L245.213,239.015L18.098,466.151 c-4.237,4.093-10.99,3.976-15.083-0.262c-3.993-4.134-3.993-10.687,0-14.821l234.667-234.667c4.165-4.164,10.917-4.164,15.083,0 l234.667,234.667c4.159,4.172,4.148,10.926-0.024,15.085C485.409,468.146,482.702,469.265,479.88,469.266z"/></svg>';
 
-const CHECKED_ICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" data-indeterminate="false" class="auto-tp-checked-icon"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.035 16.812l-.001.002 2.121 2.121.002-.002 2.121-2.12 9.19-9.192-2.12-2.121-9.191 9.19-3.536-3.534-2.121 2.12 3.535 3.536z" fill="currentColor"></path></svg>';
+const CHECKED_ICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" data-indeterminate="false" class="${CHECKBOX_CHECKED_ICON_CLASS}"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.035 16.812l-.001.002 2.121 2.121.002-.002 2.121-2.12 9.19-9.192-2.12-2.121-9.191 9.19-3.536-3.534-2.121 2.12 3.535 3.536z" fill="currentColor"></path></svg>`;
 
 // allows the log window to be draggable on the screen
 const makeElementDraggable = (element) => {
@@ -203,10 +209,10 @@ const hidePnl = () => {
 	sheet.insertRule('.pnl { visibility: hidden }', 0);
 };
 
-const getAutoTPCheckbox = (_SETTINGS) =>
-	`
+const initCheckboxStyles = () => {
+	document.head.insertAdjacentHTML('beforeend', `
 	<style>
-		.auto-tp-label {
+		.${CHECKBOX_LABEL_CLASS} {
 			box-sizing: border-box;
 			margin: 16px 0px 0px;
 			min-width: 0px;
@@ -217,7 +223,8 @@ const getAutoTPCheckbox = (_SETTINGS) =>
 			font-size: 14px;
 			width: auto;
 		}
-		.auto-tp-container {
+
+		.${CHECKBOX_CONTAINER_CLASS}{
 			box-sizing: border-box;
 			margin: 0px 8px 0px 0px;
 			min-width: 0px;
@@ -226,13 +233,14 @@ const getAutoTPCheckbox = (_SETTINGS) =>
 			height: 16px;
 			line-height: 16px;
 		}
-		.auto-tp-container input:checked ~ svg {
+		
+		.${CHECKBOX_CONTAINER_CLASS} input:checked ~ svg {
 			border: none;
 			background-color: rgb(240, 185, 11);
 			color: black;
 		}
 
-		.auto-tp-checked-icon {
+		.${CHECKBOX_CHECKED_ICON_CLASS} {
 			box-sizing: border-box;
 			cursor: pointer;
 			border: 1px solid rgb(94, 102, 115);
@@ -243,7 +251,7 @@ const getAutoTPCheckbox = (_SETTINGS) =>
 			color: transparent;
 		}
 
-		.auto-tp-text-container {
+		.${CHECKBOX_TEXT_CONTAINER_CLASS} {
 			box-sizing: border-box;
 			margin: 0px;
 			min-width: 0px;
@@ -251,7 +259,7 @@ const getAutoTPCheckbox = (_SETTINGS) =>
 			position: relative;
 		}
 
-		.auto-tp-text {
+		.${CHECKBOX_TEXT_CLASS} {
 			box-sizing: border-box;
 			margin: 0px;
 			min-width: 0px;
@@ -263,44 +271,119 @@ const getAutoTPCheckbox = (_SETTINGS) =>
 			font-size: 12px;
 		}
 	</style>
+	`);
+};
 
-	<label class="tpsl-checkbox auto-tp-label">
-		<div class="auto-tp-container">
-			<input type="checkbox" id="auto-tp-checkbox" hidden ${_SETTINGS.IS_SET_AUTO_TP && 'checked'}/>
+/**
+ * Creates the template for a checkbox
+ * @param {string} containerId the label id
+ * @param {string} inputId the checkbox input id
+ * @param {boolean} isChecked checkbox's state
+ * @param {string} textLabel text of the input
+ * @return {string} the checkbox template
+ */
+const createCheckboxHTML = (containerId, inputId, isChecked, textLabel) =>
+	`
+	<label class="tpsl-checkbox ${CHECKBOX_LABEL_CLASS}" id="${containerId}">
+		<div class="${CHECKBOX_CONTAINER_CLASS}">
+			<input type="checkbox" id="${inputId}" hidden ${isChecked && 'checked'}/>
 			${CHECKED_ICON}
 		</div>
-		<div class="auto-tp-text-container">
-			<div class="auto-tp-text">
-				Auto Take Profit (based on RR)
+		<div class="${CHECKBOX_TEXT_CONTAINER_CLASS}">
+			<div class="${CHECKBOX_TEXT_CLASS}">
+				${textLabel}
 			</div>
 		</div>
 	</label>
 	`;
 
-const initAutoTPCheckbox = (stopLossInput, _SETTINGS) => {
-	const autoTPContainer = document.querySelector('.auto-tp-container');
-	if (autoTPContainer) {
+/**
+ * Append checkbox after tp/sl inputs
+ * @param {HTMLElement} stopLossInput
+ * @param {string} htmlString
+ */
+const appendCheckbox = (stopLossInput, htmlString) => {
+	const containerDiv = stopLossInput.parentNode.parentNode.parentNode;
+	containerDiv.insertAdjacentHTML(
+		'beforeend',
+		htmlString,
+	);
+};
+
+const initCheckbox = (
+	stopLossInput,
+	_SETTINGS,
+	settingName,
+	textLabel,
+	containerID,
+	checkboxID,
+	onChange,
+) => {
+	const container = document.querySelector(`#${containerID}`);
+	if (container) {
 		// update the checkbox visual state if chrome settings are changed
-		const autoTPCheckbox = document.querySelector('#auto-tp-checkbox');
-		if (autoTPCheckbox.checked !== _SETTINGS.IS_SET_AUTO_TP)
-			autoTPCheckbox.checked = _SETTINGS.IS_SET_AUTO_TP;
+		const checkbox = document.querySelector(`#${checkboxID}`);
+		if (checkbox.checked !== _SETTINGS[settingName])
+			checkbox.checked = _SETTINGS[settingName];
+
 		return;
 	}
 
-	// add checkbox under stop loss input
-	const containerDiv = stopLossInput.parentNode.parentNode.parentNode;
-	containerDiv.insertAdjacentHTML('beforeend', getAutoTPCheckbox(_SETTINGS));
+	appendCheckbox(
+		stopLossInput,
+		createCheckboxHTML(
+			containerID,
+			checkboxID,
+			_SETTINGS[settingName],
+			textLabel,
+		),
+	);
 
-	// sync with chrome when checkbox is toggled
-	const autoTPCheckbox = document.querySelector('#auto-tp-checkbox');
-	autoTPCheckbox.addEventListener('change', () => {
-		const settings = {
-			..._SETTINGS,
-			IS_SET_AUTO_TP: autoTPCheckbox.checked,
-		};
+	// call onChange event when checkbox is toggled
+	const useLeverageCheckbox = document.querySelector(`#${checkboxID}`);
+	useLeverageCheckbox.addEventListener('change', onChange);
+};
 
-		chrome.storage.sync.set(settings);
-	});
+const initUseLeverageCheckbox = (stopLossInput, _SETTINGS) => {
+	const useLeverageContainerID = 'use-leverage-container';
+	const useLeverageCheckboxID = 'use-leverage-checkbox';
+
+	initCheckbox(
+		stopLossInput,
+		_SETTINGS,
+		'IS_SET_USE_LEVERAGE',
+		'Use leverage for the equation',
+		useLeverageContainerID,
+		useLeverageCheckboxID,
+		(ev) => {
+			chrome.storage.sync.set({
+				..._SETTINGS,
+				IS_SET_USE_LEVERAGE: ev.currentTarget.checked,
+			});
+		},
+	);
+};
+
+const initAutoTPCheckbox = (stopLossInput, _SETTINGS) => {
+	const autoTPContainerID = 'auto-tp-container';
+	const autoTPCheckboxID = 'auto-tp-checkbox';
+
+	initCheckbox(
+		stopLossInput,
+		_SETTINGS,
+		'IS_SET_AUTO_TP',
+		'Auto Take Profit (based on RR)',
+		autoTPContainerID,
+		autoTPCheckboxID,
+		(ev) => {
+			const settings = {
+				..._SETTINGS,
+				IS_SET_AUTO_TP: ev.currentTarget.checked,
+			};
+
+			chrome.storage.sync.set(settings);
+		},
+	);
 };
 
 const getLogWindowTemplate = (title = '') =>
@@ -457,4 +540,6 @@ export {
 	getBalanceFromHtml,
 	initDialog,
 	initAutoTPCheckbox,
+	initUseLeverageCheckbox,
+	initCheckboxStyles,
 };

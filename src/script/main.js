@@ -184,6 +184,8 @@
 		SETTINGS = await settings.loadSettings(settings);
 
 		if (SETTINGS.IS_EXTENSION_ACTIVE) {
+			html.initCheckboxStyles();
+
 			if (SETTINGS.IS_HIDE_PNL)
 				html.hidePnl(SETTINGS.IS_HIDE_PNL);
 
@@ -199,8 +201,10 @@
 				initDOMLastPriceObserver();
 			}
 
-			if (isStopLossLoaded)
+			if (isStopLossLoaded) {
 				html.initAutoTPCheckbox(isStopLossLoaded, SETTINGS);
+				html.initUseLeverageCheckbox(isStopLossLoaded, SETTINGS);
+			}
 		}
 	}
 
