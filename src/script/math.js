@@ -63,7 +63,12 @@ export const calculatePosSize = (
 	};
 };
 
-export const calculateTargetPrice = (rrRatio, stopLoss, entry) => {
+export const calculateTakeProfitFromSL = (rrRatio, stopLoss, entry) => {
 	const targetPrice = entry + (entry - stopLoss) * rrRatio;
+	return targetPrice;
+};
+
+export const calculateStopLossFromTP = (rrRatio, takeProfit, entry) => {
+	const targetPrice = entry + (entry - takeProfit) / rrRatio;
 	return targetPrice;
 };

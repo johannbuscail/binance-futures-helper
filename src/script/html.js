@@ -11,13 +11,17 @@ const CHECKBOX_CHECKED_ICON_CLASS = `${PREFIX}-cb-checked-icon`;
 const CHECKBOX_TEXT_CONTAINER_CLASS = `${PREFIX}-cb-text-container`;
 const CHECKBOX_TEXT_CLASS = `${PREFIX}-cb-text`;
 
+const RADIO_TITLE_CLASS = `${PREFIX}-radio-title`;
+const RADIO_FORM_CLASS = `${PREFIX}-radio-form`;
+const RADIO_LABEL_CLASS = `${PREFIX}-radio-label`;
+const RADIO_INPUT_CLASS = `${PREFIX}-radio-input`;
+
 const USE_LEVERAGE_CONTAINER_ID = `${PREFIX}-use-leverage-container`;
 const USE_LEVERAGE_CHECKBOX_ID = `${PREFIX}-use-leverage-checkbox`;
 
-const AUTO_TP_CONTAINER_ID = `${PREFIX}-auto-tp-container`;
-const AUTO_TP_CHECKBOX_ID = `${PREFIX}-auto-tp-checkbox`;
-
 const BALANCE_QUERY = 'div[name=orderForm] span';
+
+const BINANCE_ORANGE = '#f0b90a';
 
 const DOWN_ICON = '<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 490.688 490.688" style="enable-background:new 0 0 490.688 490.688;" xml:space="preserve"> <g> <path style="fill:#607D8B;" d="M472.328,216.529L245.213,443.665L18.098,216.529c-4.237-4.093-10.99-3.975-15.083,0.262 c-3.992,4.134-3.992,10.687,0,14.82l234.667,234.667c4.165,4.164,10.917,4.164,15.083,0l234.667-234.667 c4.093-4.237,3.975-10.99-0.262-15.083c-4.134-3.993-10.687-3.993-14.821,0L472.328,216.529z"/>   <path style="fill:#607D8B;" d="M472.328,24.529L245.213,251.665L18.098,24.529c-4.237-4.093-10.99-3.975-15.083,0.262 c-3.992,4.134-3.992,10.687,0,14.821l234.667,234.667c4.165,4.164,10.917,4.164,15.083,0L487.432,39.612 c4.237-4.093,4.354-10.845,0.262-15.083c-4.093-4.237-10.845-4.354-15.083-0.262c-0.089,0.086-0.176,0.173-0.262,0.262 L472.328,24.529z"/> </g> <path d="M245.213,469.415c-2.831,0.005-5.548-1.115-7.552-3.115L2.994,231.633c-4.093-4.237-3.975-10.99,0.262-15.083 c4.134-3.992,10.687-3.992,14.82,0l227.136,227.115l227.115-227.136c4.237-4.093,10.99-3.975,15.083,0.262 c3.993,4.134,3.993,10.687,0,14.821L252.744,466.279C250.748,468.28,248.04,469.408,245.213,469.415z"/> <path d="M245.213,277.415c-2.831,0.005-5.548-1.115-7.552-3.115L2.994,39.633c-4.093-4.237-3.975-10.99,0.262-15.083 c4.134-3.992,10.687-3.992,14.821,0l227.136,227.115L472.328,24.529c4.093-4.237,10.845-4.354,15.083-0.262   s4.354,10.845,0.262,15.083c-0.086,0.089-0.173,0.176-0.262,0.262L252.744,274.279C250.748,276.28,248.04,277.408,245.213,277.415z"/></svg>';
 const UP_ICON = '<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 490.544 490.544" style="enable-background:new 0 0 490.544 490.544;" xml:space="preserve"><g> <path style="fill:#607D8B;" d="M18.098,274.151L245.213,47.015l227.115,227.136c4.237,4.093,10.99,3.975,15.083-0.262 c3.993-4.134,3.993-10.687,0-14.821L252.744,24.401c-4.165-4.164-10.917-4.164-15.083,0L2.994,259.068 c-4.093,4.237-3.975,10.99,0.262,15.083c4.134,3.992,10.687,3.992,14.82,0H18.098z"/> <path style="fill:#607D8B;" d="M252.765,216.38c-4.165-4.164-10.917-4.164-15.083,0L3.016,451.047 c-4.093,4.237-3.976,10.99,0.262,15.083c4.134,3.993,10.687,3.993,14.821,0l227.115-227.115l227.115,227.136 c4.237,4.093,10.99,3.976,15.083-0.261c3.993-4.134,3.993-10.688,0-14.821L252.765,216.38z"/></g><path d="M479.88,277.266c-2.831,0.005-5.548-1.115-7.552-3.115L245.213,47.015L18.098,274.151 c-4.237,4.093-10.99,3.975-15.083-0.262c-3.992-4.134-3.992-10.687,0-14.82L237.682,24.401c4.165-4.164,10.917-4.164,15.083,0 l234.667,234.667c4.159,4.172,4.148,10.926-0.024,15.085C485.409,276.146,482.702,277.265,479.88,277.266z"/><path d="M479.88,469.266c-2.831,0.005-5.548-1.115-7.552-3.115L245.213,239.015L18.098,466.151 c-4.237,4.093-10.99,3.976-15.083-0.262c-3.993-4.134-3.993-10.687,0-14.821l234.667-234.667c4.165-4.164,10.917-4.164,15.083,0 l234.667,234.667c4.159,4.172,4.148,10.926-0.024,15.085C485.409,468.146,482.702,469.265,479.88,469.266z"/></svg>';
@@ -280,6 +284,73 @@ const initCheckboxStyles = () => {
 	`);
 };
 
+const initRadioStyles = () => {
+	document.head.insertAdjacentHTML('beforeend', `
+	<style>
+		.${RADIO_TITLE_CLASS} {
+			color: white;
+			margin-bottom: 10px;
+			font-size: 13.5px;
+		}
+		.${RADIO_FORM_CLASS}  {
+			box-sizing: border-box;
+			margin: 16px 0px 0px;
+			min-width: 0px;
+			color: rgb(94, 102, 115);
+			font-size: 14px;
+			width: auto;
+			display: grid;
+		}
+
+		.${RADIO_LABEL_CLASS} {
+			line-height: 1.1;
+			display: grid;
+			grid-template-columns: 1em auto;
+			gap: 0.5em;
+			margin-left: 20px;
+		}
+		
+		.${RADIO_LABEL_CLASS} + .${RADIO_LABEL_CLASS} {
+			margin-top: 1em;
+		}
+
+		.${RADIO_LABEL_CLASS} span {
+			color: white;
+			font-size: 12px;
+		}
+
+		.${RADIO_INPUT_CLASS} {
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+			margin: 0;
+			font: inherit;
+			color: currentColor;
+			width: 1.15em;
+			height: 1.15em;
+			border: 0.15em solid currentColor;
+			border-radius: 50%;
+			transform: translateY(-0.075em);
+			display: grid;
+			place-content: center;
+		}
+
+		.${RADIO_INPUT_CLASS}::before {
+			content: "";
+			width: 0.6em;
+			height: 0.6em;
+			border-radius: 50%;
+			transform: scale(0);
+			transition: 120ms transform ease-in-out;
+			box-shadow: inset 1em 1em ${BINANCE_ORANGE};
+		}
+		
+		.${RADIO_INPUT_CLASS}:checked::before {
+			transform: scale(1);
+		}
+	</style>`);
+};
+
 /**
  * Creates the template for a checkbox
  * @param {string} containerId the label id
@@ -303,12 +374,43 @@ const createCheckboxHTML = (containerId, inputId, isChecked, textLabel) =>
 	</label>
 	`;
 
+const createRadiosHTML = (radioName, radioElements, containerId, containerTitle) => {
+	let radioHtml = '';
+
+	radioElements.forEach(({
+		value, isChecked, text, id = '',
+	}) => {
+		radioHtml += `
+		<label class="${RADIO_LABEL_CLASS}">
+			<input 
+				type="radio" 
+				class="${RADIO_INPUT_CLASS}" 
+				name="${radioName}"
+				value="${value}"
+				id="${id}"
+				${isChecked && 'checked'}
+			/>
+			<span>${text}</span>
+		</label>
+		`;
+	});
+
+	const htmlContainer = `
+		<div class="${RADIO_FORM_CLASS}" id="${containerId}">
+				<span class="${RADIO_TITLE_CLASS}">${containerTitle}</span>
+				${radioHtml}
+		</div>
+	`;
+
+	return htmlContainer;
+};
+
 /**
  * Append checkbox after tp/sl inputs
  * @param {HTMLElement} stopLossInput
  * @param {string} htmlString
  */
-const appendCheckbox = (stopLossInput, htmlString) => {
+const appendHTML = (stopLossInput, htmlString) => {
 	const containerDiv = stopLossInput.parentNode.parentNode.parentNode;
 	containerDiv.insertAdjacentHTML(
 		'beforeend',
@@ -335,7 +437,7 @@ const initCheckbox = (
 		return;
 	}
 
-	appendCheckbox(
+	appendHTML(
 		stopLossInput,
 		createCheckboxHTML(
 			containerID,
@@ -346,8 +448,42 @@ const initCheckbox = (
 	);
 
 	// call onChange event when checkbox is toggled
-	const useLeverageCheckbox = document.querySelector(`#${checkboxID}`);
-	useLeverageCheckbox.addEventListener('change', onChange);
+	const checkbox = document.querySelector(`#${checkboxID}`);
+	checkbox.addEventListener('change', onChange);
+};
+
+const initRadio = (
+	stopLossInput,
+	_SETTINGS,
+	settingName,
+	radioName,
+	radioElements,
+	containerID,
+	containerTitle,
+	onChange,
+) => {
+	const container = document.querySelector(`#${containerID}`);
+	if (container) {
+		// select the correct radio if chrome settings are changed
+		const selectedRadio = document.querySelector(`input[name=${radioName}]:checked`);
+		if (selectedRadio.value !== _SETTINGS[settingName]) {
+			const radioThatShouldBeSelected = document.querySelector(`input[name=${radioName}][value=${_SETTINGS[settingName]}]`);
+			radioThatShouldBeSelected.checked = true;
+		}
+
+		return;
+	}
+
+	appendHTML(
+		stopLossInput,
+		createRadiosHTML(radioName, radioElements, containerID, containerTitle),
+	);
+
+	// sync with chrome when selected radio changes
+	const radios = document.querySelectorAll(`input[name=${radioName}]`);
+	radios.forEach((radio) =>
+		radio.addEventListener('click', () =>
+			onChange(radio.value, radio)));
 };
 
 const initUseLeverageCheckbox = (stopLossInput, _SETTINGS) =>
@@ -366,22 +502,33 @@ const initUseLeverageCheckbox = (stopLossInput, _SETTINGS) =>
 		},
 	);
 
-const initAutoTPCheckbox = (stopLossInput, _SETTINGS) =>
-	initCheckbox(
+const initAutoTPSLRadio = (stopLossInput, _SETTINGS) =>
+	initRadio(
 		stopLossInput,
 		_SETTINGS,
-		'IS_SET_AUTO_TP',
-		'Auto Take Profit (based on RR)',
-		AUTO_TP_CONTAINER_ID,
-		AUTO_TP_CHECKBOX_ID,
-		(ev) => {
-			const settings = {
+		'AUTO_SET_TPSL',
+		'auto-tpsl-checkbox',
+		[{
+			value: 'tp',
+			text: 'Take profit',
+			isChecked: _SETTINGS.AUTO_SET_TPSL === 'tp',
+		}, {
+			value: 'sl',
+			text: 'Stop loss',
+			isChecked: _SETTINGS.AUTO_SET_TPSL === 'sl',
+		}, {
+			value: 'off',
+			text: 'Off',
+			isChecked: _SETTINGS.AUTO_SET_TPSL === 'off',
+		}],
+		'auto-tpsl-container',
+		'Automatically set',
+		(value) =>
+			chrome.storage.sync.set({
 				..._SETTINGS,
-				IS_SET_AUTO_TP: ev.currentTarget.checked,
-			};
+				AUTO_SET_TPSL: value,
+			}),
 
-			chrome.storage.sync.set(settings);
-		},
 	);
 
 const getLogWindowTemplate = (title = '') =>
@@ -537,7 +684,8 @@ export {
 	setInputValue,
 	getBalanceFromHtml,
 	initDialog,
-	initAutoTPCheckbox,
+	initAutoTPSLRadio,
 	initUseLeverageCheckbox,
 	initCheckboxStyles,
+	initRadioStyles,
 };

@@ -9,7 +9,7 @@
 	"SL_ORDER_TYPE": "market",
 	"IS_EXTENSION_ACTIVE": true,
 	"IS_SET_POS_SIZE": true,
-	"IS_SET_AUTO_TP": false,
+	"AUTO_SET_TPSL": "off",
 	"IS_SET_USE_LEVERAGE": false,
 	"IS_HIDE_PNL": false,
 	"IS_LOGGER_ACTIVE": true,

@@ -32,7 +32,8 @@
         "src/script/html.js",
         "src/script/math.js",
         "src/script/helpers.js",
-        "src/script/settings.js"
+        "src/script/settings.js",
+		"src/script/domQueries.js"
       ],
       "matches": [
         "<all_urls>"

@@ -30,12 +30,20 @@
 		</tr>
 
 		<tr>
-			<td>Set take profit price automatically (based on RR)</td>
+			<td>Set take profit or stop loss automatically</td>
 			<td>
-				<input type="checkbox" id="is-set-auto-tp" class="switch-input" />
-				<label for="is-set-auto-tp" class="switch-label"><span class="toggle--on">ON</span><span
-						class="toggle--off">OFF</span>
-				</label>
+
+				<div class="radio">
+					<div class="group">
+						<input type="radio" name="auto-tpsl" id="auto-tpsl-tp" value="tp" />
+						<label for="auto-tpsl-tp">TP</label>
+						<input type="radio" name="auto-tpsl" id="auto-tpsl-sl" value="sl" />
+						<label for="auto-tpsl-sl">SL</label>
+						<input type="radio" name="auto-tpsl" id="auto-tpsl-off" value="off" />
+						<label for="auto-tpsl-off">OFF</label>
+					</div>
+				</div>
+
 			</td>
 		</tr>
 

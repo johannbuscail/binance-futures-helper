@@ -3,20 +3,10 @@
 	const math = await import('./math.js');
 	const helpers = await import('./helpers.js');
 	const settings = await import('./settings.js');
-
-	const ORDER_FORM_QUERY = 'div[name=orderForm]';
-	const INPUT_PRICE_QUERY = 'input[id^="limitPrice"]';
-	const POSITION_SIZE_QUERY = 'input[id^="unitAmount"]';
-	const TAKE_PROFIT_QUERY = 'input[id^="takeProfitStopPrice"]';
-	const STOP_LOSS_QUERY = 'input[id^="stopLossStopPrice"]';
-	const LAST_PRICE_BTN_QUERY = 'div[data-bn-type=\'text\']';
-	const UOM_QUERY = 'label[data-testid=\'unit-select-button\']';
-	const LAST_PRICE_QUERY = '.ticker-wrap .draggableHandle';
-	const TAB_MARKET_QUERY = '#tab-MARKET > .active';
-	const TAB_LIMIT_QUERY = '#tab-LIMIT > .active';
-	const LEVERAGE_QUERY = '.margin-leverage-or-title-row a:last-child';
+	const domQueries = await import('./domQueries.js');
 
 	let SETTINGS = {};
+	let NUM_OF_RELOADS = 0;
 	let priceObserver;
 	const dialog = html.initDialog();
 
@@ -32,12 +22,12 @@
 		const tpOrderType = SETTINGS.TP_ORDER_TYPE;
 		const slOrderType = SETTINGS.SL_ORDER_TYPE;
 
-		const stopLoss = parseFloat(document.querySelector(STOP_LOSS_QUERY).value);
-		const target = parseFloat(document.querySelector(TAKE_PROFIT_QUERY).value);
+		const stopLoss = parseFloat(document.querySelector(domQueries.STOP_LOSS).value);
+		const target = parseFloat(document.querySelector(domQueries.TAKE_PROFIT).value);
 		const leverage = SETTINGS.IS_SET_USE_LEVERAGE
-			? parseFloat(document.querySelector(LEVERAGE_QUERY).innerText.slice(0, -1))
+			? parseFloat(document.querySelector(domQueries.LEVERAGE).innerText.slice(0, -1))
 			: 1;
-		const posSizeInput = document.querySelector(POSITION_SIZE_QUERY);
+		const posSizeInput = document.querySelector(domQueries.POSITION_SIZE);
 		const balance = html.getBalanceFromHtml() * (100 / portfolioPercentage);
 
 		// have to have balance, entry and stopLoss
@@ -76,48 +66,87 @@
 	}
 
 	function setLimitPosSize() {
-		const entry = parseFloat(document.querySelector(INPUT_PRICE_QUERY).value);
-		const unitOfMeasure = document.querySelector(UOM_QUERY).innerText;
+		const entry = parseFloat(document.querySelector(domQueries.INPUT_PRICE).value);
+		const unitOfMeasure = document.querySelector(domQueries.UOM).innerText;
 		setPosSizeInput(unitOfMeasure, entry);
 	}
 
 	function setMarketPosSize() {
-		const entry = parseFloat(document.querySelector(LAST_PRICE_QUERY).innerText);
-		const unitOfMeasure = document.querySelector(UOM_QUERY).innerText;
+		const entry = parseFloat(document.querySelector(domQueries.LAST_PRICE).innerText);
+		const unitOfMeasure = document.querySelector(domQueries.UOM).innerText;
 		setPosSizeInput(unitOfMeasure, entry);
+	}
+
+	function setStopLoss(isLimit) {
+		const entry = parseFloat(
+			isLimit ? document.querySelector(domQueries.INPUT_PRICE).value
+				: document.querySelector(domQueries.LAST_PRICE).innerText,
+		);
+		const takeProfit = parseFloat(document.querySelector(domQueries.TAKE_PROFIT).value);
+		const slInput = document.querySelector(domQueries.STOP_LOSS);
+		const slPrice = math.calculateStopLossFromTP(SETTINGS.RR_RATIO, takeProfit, entry);
+		if (helpers.isNumber(slPrice))
+			html.setInputValue(slInput, slPrice);
+	}
+
+	function setSLAndLimitPos() {
+		if (SETTINGS.AUTO_SET_TPSL === 'sl')
+			setStopLoss(true);
+		setLimitPosSize();
+	}
+
+	function setSLAndMarketPos() {
+		if (SETTINGS.AUTO_SET_TPSL === 'sl')
+			setStopLoss(false);
+
+		setMarketPosSize();
 	}
 
 	function setTakeProfit(isLimit) {
 		const entry = parseFloat(
-			isLimit ? document.querySelector(INPUT_PRICE_QUERY).value
-				: document.querySelector(LAST_PRICE_QUERY).innerText,
+			isLimit ? document.querySelector(domQueries.INPUT_PRICE).value
+				: document.querySelector(domQueries.LAST_PRICE).innerText,
 		);
-		const stopLoss = parseFloat(document.querySelector(STOP_LOSS_QUERY).value);
-		const targetInput = document.querySelector(TAKE_PROFIT_QUERY);
-		const targetPrice = math.calculateTargetPrice(SETTINGS.RR_RATIO, stopLoss, entry);
-		if (helpers.isNumber(targetPrice))
-			html.setInputValue(targetInput, targetPrice);
+		const stopLoss = parseFloat(document.querySelector(domQueries.STOP_LOSS).value);
+		const tpInput = document.querySelector(domQueries.TAKE_PROFIT);
+		const tpPrice = math.calculateTakeProfitFromSL(SETTINGS.RR_RATIO, stopLoss, entry);
+		if (helpers.isNumber(tpPrice))
+			html.setInputValue(tpInput, tpPrice);
 	}
 
 	function setLimitPosAndTP() {
 		setLimitPosSize();
-		if (SETTINGS.IS_SET_AUTO_TP)
+		if (SETTINGS.AUTO_SET_TPSL === 'tp')
 			setTakeProfit(true);
 	}
 
 	function setMarketPosAndTP() {
 		setMarketPosSize();
-		if (SETTINGS.IS_SET_AUTO_TP)
+		if (SETTINGS.AUTO_SET_TPSL === 'tp')
 			setTakeProfit(false);
+	}
+
+	function updateMarketTPOrSL() {
+		if (SETTINGS.AUTO_SET_TPSL === 'tp')
+			setMarketPosAndTP();
+		else if (SETTINGS.AUTO_SET_TPSL === 'sl')
+			setSLAndMarketPos();
+	}
+
+	function updateLimitTPOrSL() {
+		if (SETTINGS.AUTO_SET_TPSL === 'tp')
+			setLimitPosAndTP();
+		else if (SETTINGS.AUTO_SET_TPSL === 'sl')
+			setSLAndLimitPos();
 	}
 
 	function initDOMLastPriceObserver() {
 		priceObserver = new MutationObserver((mutations) => {
 			if (mutations[0].type === 'characterData')
-				setMarketPosAndTP();
+				updateMarketTPOrSL();
 		});
 
-		priceObserver.observe(document.querySelector(LAST_PRICE_QUERY), {
+		priceObserver.observe(document.querySelector(domQueries.LAST_PRICE), {
 			characterData: true,
 			subtree: true,
 		});
@@ -129,8 +158,8 @@
 	}
 
 	function initMarketCalculator() {
-		const slInput = document.querySelector(STOP_LOSS_QUERY);
-		const tpInput = document.querySelector(TAKE_PROFIT_QUERY);
+		const slInput = document.querySelector(domQueries.STOP_LOSS);
+		const tpInput = document.querySelector(domQueries.TAKE_PROFIT);
 
 		const buyMarketBtn = Array.from(document.querySelectorAll('button')).find(
 			(b) =>
@@ -142,10 +171,12 @@
 		);
 
 		slInput.addEventListener('keyup', setMarketPosAndTP);
-		tpInput.addEventListener('keyup', setMarketPosSize);
+		tpInput.addEventListener('keyup', setSLAndMarketPos);
 
 		function buySellOnClick(e) {
-			setMarketPosAndTP();
+			// update one last time the stop loss or take profit before placing the order
+			updateMarketTPOrSL();
+
 			if (
 				SETTINGS.IS_PREVENT_MARKET_BUY_WITHOUT_SL
 				&& !helpers.isNumber(parseFloat(slInput.value))
@@ -159,41 +190,45 @@
 		sellMarketBtn.onclick = buySellOnClick;
 
 		// run initial calculation if we change plugin settings during the trade
-		setMarketPosAndTP();
+		updateMarketTPOrSL();
 	}
 
 	function initLimitCalculator() {
 		const lastPriceBtn = Array.from(
 			document
-				.querySelector(ORDER_FORM_QUERY)
-				.querySelectorAll(LAST_PRICE_BTN_QUERY),
+				.querySelector(domQueries.ORDER_FORM)
+				.querySelectorAll(domQueries.LAST_PRICE_BTN),
 		).find((c) =>
 			c.innerHTML === 'Last');
-		const entryInput = document.querySelector(INPUT_PRICE_QUERY);
-		const slInput = document.querySelector(STOP_LOSS_QUERY);
-		const tpInput = document.querySelector(TAKE_PROFIT_QUERY);
+		const entryInput = document.querySelector(domQueries.INPUT_PRICE);
+		const slInput = document.querySelector(domQueries.STOP_LOSS);
+		const tpInput = document.querySelector(domQueries.TAKE_PROFIT);
 
-		entryInput.addEventListener('keyup', setLimitPosAndTP);
+		entryInput.addEventListener('keyup', updateLimitTPOrSL);
 		slInput.addEventListener('keyup', setLimitPosAndTP);
-		tpInput.addEventListener('keyup', setLimitPosSize);
-		lastPriceBtn.addEventListener('click', setLimitPosAndTP);
+		tpInput.addEventListener('keyup', setSLAndLimitPos);
+		lastPriceBtn.addEventListener('click', updateLimitTPOrSL);
 
 		// run initial calc if we change settings during the trade
-		setLimitPosAndTP();
+		updateLimitTPOrSL();
 	}
 
 	async function initCalculator() {
 		SETTINGS = await settings.loadSettings(settings);
 
 		if (SETTINGS.IS_EXTENSION_ACTIVE) {
-			html.initCheckboxStyles();
+			// only init on first load
+			if (NUM_OF_RELOADS === 0) {
+				html.initCheckboxStyles();
+				html.initRadioStyles();
+			}
 
 			if (SETTINGS.IS_HIDE_PNL)
 				html.hidePnl(SETTINGS.IS_HIDE_PNL);
 
-			const isStopLossLoaded = document.querySelector(STOP_LOSS_QUERY);
-			const isLimitTabSelected = document.querySelector(TAB_LIMIT_QUERY);
-			const isMarketTabSelected = document.querySelector(TAB_MARKET_QUERY);
+			const isStopLossLoaded = document.querySelector(domQueries.STOP_LOSS);
+			const isLimitTabSelected = document.querySelector(domQueries.TAB_LIMIT);
+			const isMarketTabSelected = document.querySelector(domQueries.TAB_MARKET);
 
 			if (isStopLossLoaded && isLimitTabSelected) {
 				terminateDOMLastPriceObserver();
@@ -204,10 +239,12 @@
 			}
 
 			if (isStopLossLoaded) {
-				html.initAutoTPCheckbox(isStopLossLoaded, SETTINGS);
 				html.initUseLeverageCheckbox(isStopLossLoaded, SETTINGS);
+				html.initAutoTPSLRadio(isStopLossLoaded, SETTINGS);
 			}
 		}
+
+		NUM_OF_RELOADS += 1;
 	}
 
 	function terminateCalculator() {
@@ -221,8 +258,8 @@
 	});
 
 	html.observeHtml(
-		ORDER_FORM_QUERY,
-		STOP_LOSS_QUERY,
+		domQueries.ORDER_FORM,
+		domQueries.STOP_LOSS,
 		initCalculator,
 		terminateCalculator,
 	);

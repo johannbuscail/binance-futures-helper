@@ -1,0 +1,11 @@
+export const ORDER_FORM = 'div[name=orderForm]';
+export const INPUT_PRICE = 'input[id^="limitPrice"]';
+export const POSITION_SIZE = 'input[id^="unitAmount"]';
+export const TAKE_PROFIT = 'input[id^="takeProfitStopPrice"]';
+export const STOP_LOSS = 'input[id^="stopLossStopPrice"]';
+export const LAST_PRICE_BTN = 'div[data-bn-type=\'text\']';
+export const UOM = 'label[data-testid=\'unit-select-button\']';
+export const LAST_PRICE = '.ticker-wrap .draggableHandle';
+export const TAB_MARKET = '#tab-MARKET > .active';
+export const TAB_LIMIT = '#tab-LIMIT > .active';
+export const LEVERAGE = '.margin-leverage-or-title-row a:last-child';
