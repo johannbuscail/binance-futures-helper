@@ -163,11 +163,11 @@
 
 		const buyMarketBtn = Array.from(document.querySelectorAll('button')).find(
 			(b) =>
-				b.innerText === 'Buy/Long',
+				b.innerText === 'Buy/Long' || b.innerText === 'Open long',
 		);
 		const sellMarketBtn = Array.from(document.querySelectorAll('button')).find(
 			(b) =>
-				b.innerText === 'Sell/Short',
+				b.innerText === 'Sell/Short' || b.innerText === 'Open short',
 		);
 
 		slInput.addEventListener('keyup', setMarketPosAndTP);
@@ -229,6 +229,10 @@
 			const isStopLossLoaded = document.querySelector(domQueries.STOP_LOSS);
 			const isLimitTabSelected = document.querySelector(domQueries.TAB_LIMIT);
 			const isMarketTabSelected = document.querySelector(domQueries.TAB_MARKET);
+			const isCloseHedgeTabSelected = document.querySelector(domQueries.TAB_CLOSE_HEDGE);
+
+			if (isCloseHedgeTabSelected)
+				return;
 
 			if (isStopLossLoaded && isLimitTabSelected) {
 				terminateDOMLastPriceObserver();

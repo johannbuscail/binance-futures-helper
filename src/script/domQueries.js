@@ -8,4 +8,5 @@ export const UOM = 'label[data-testid=\'unit-select-button\']';
 export const LAST_PRICE = '.ticker-wrap .draggableHandle';
 export const TAB_MARKET = '#tab-MARKET > .active';
 export const TAB_LIMIT = '#tab-LIMIT > .active';
+export const TAB_CLOSE_HEDGE = '#tab-CLOSE > .active';
 export const LEVERAGE = '.margin-leverage-or-title-row a:last-child';
